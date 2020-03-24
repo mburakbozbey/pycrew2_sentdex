@@ -1,21 +1,17 @@
-# Using Python programming to Play Grand Theft Auto 5
+# A Deep Neural Network Plays Crew 2
 
-Explorations of Using Python to play Grand Theft Auto 5, mainly for the purposes of creating self-driving cars and other vehicles.
+Adapted and inspired by sentdex’s Python Plays GTA V series.
 
-We read frames directly from the desktop, rather than working with the game's code itself. This means it works with more games than just GTA V, and it will basically learn (well, attempt to learn...) whatever you put in front of it based on the frames as input and key presses as output.
+Sentdex Github: https://github.com/Sentdex/pygta5
+Sentdex Youtube: https://www.youtube.com/playlist?list...
 
-Pull requests are welcomed.
+# Training Details:
 
-Currently, to use the latest version of this AI, you will need to run first "create_training_data.py," then balance this data with "balance_Data.py."
+- Dataset: 40 GB Training (80%) & Testing (20%) and 10 GB Validation.
+- DenseNet121 with fine-tuning on ImageNet weights.
+- Duration: Approx. 10 Hours, 8 Epochs.
 
-When creating training data, this works when you have the game in windowed mode, 800x600 resolution, at the top left of your screen. You need this for both training and testing. Eventually we can go off the window's name, but, for now, the current code wants the window in the corner.
+# Why the model was fine-tuned on ImageNet weights?
 
-Do this for as many files/training samples as you wish. I suggest 100K+ after balancing, but the more the merrier.
-
-Next, Train the model with train_model.py.
-
-Finally, use the model in game with test_model.py. 
-
-...you'll probably want to poke into the tutorials here: https://pythonprogramming.net/game-frames-open-cv-python-plays-gta-v/. If you need tutorials on deep learning, or tensorflow, or tflearn, see here: https://pythonprogramming.net/tensorflow-introduction-machine-learning-tutorial/
-
-Do you know of some relevant papers/research/models for this project? Share with us here: https://github.com/Sentdex/pygta5/issues/11
+- From the paper “How transferable are features in deep neural networks?” by J. Yosinski et al., even big datasets can benefit from transfer learning which improves generalization. 
+- Presentation of the review of the paper: https://drive.google.com/file/d/1aGBy...
