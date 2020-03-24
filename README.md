@@ -2,8 +2,8 @@
  <p align="center"> 
     <img src="https://github.com/mburakbozbey/pycrew2/blob/master/giphy.gif" alt="img">
  </p>
-Adapted and inspired by sentdex’s Python Plays GTA V series.
-
+ 
+- Adapted and inspired by sentdex’s Python Plays GTA V series.
 - Sentdex <a href="https://github.com/Sentdex/pygta5" target="_blank">Github</a>
 - Sentdex <a href="https://www.youtube.com/watch?v=ks4MPfMq8aQ&list=PLQVvvaa0QuDeETZEOy4VdocT7TOjfSA8a" target="_blank">Youtube</a>
 
@@ -15,7 +15,7 @@ Adapted and inspired by sentdex’s Python Plays GTA V series.
 
 # Demo Videos
 
-<a href="https://www.youtube.com/watch?v=1Ho4b1gUS7Y" target="_blank">`Demo`</a>
+<a href="https://www.youtube.com/watch?v=1Ho4b1gUS7Y" target="_blank">`First version`</a>
 
 # Why the model was fine-tuned on ImageNet weights?
 
