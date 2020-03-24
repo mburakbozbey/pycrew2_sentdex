@@ -6,8 +6,13 @@ import keras
 import os
 import pickle
 import numpy as np
+from keras.models import load_model
+from keras.models import model_from_json
+import json
+from keras.applications.densenet import DenseNet121, preprocess_input
 
-validation_dir = "prepared_validation_data"
+
+validation_dir = r"E:\crew2_train\validation"
 
 USE_WEIGHTS = True
 
@@ -43,7 +48,11 @@ close_dict = {
               }
 
 
-model = keras.models.load_model(f"trained_models/1536269759_xception-v1_p-01.0456_ta-0.73_va-0.38.model")
+with open('first_batch_model_Epoch_7_json.json','r') as f:
+    model_json = json.load(f)
+
+model = model_from_json(model_json)
+model.load_weights('first_batch_model_Epoch_7.h5')
 
 
 while True:
@@ -63,15 +72,17 @@ while True:
     closeness = 0
     # step 1
     for f in os.listdir(validation_dir):
-        if ".pickle" in f:
-            chunk = pickle.load(open(os.path.join(validation_dir, f), "rb"))
+        if ".npy" in f:
+
+            print(os.path.join(validation_dir, f))
+            chunk = np.load(os.path.join(validation_dir, f))
 
             for data in chunk:
                 total += 1
-                X = data[1]
-                X = X/255.0
-                y = data[0]
-
+                X = np.array(data[0])
+                X = preprocess_input(X)
+                y = data[1]
+                print(X.shape, len(y))
                 prediction = model.predict([X.reshape(-1, X.shape[0], X.shape[1], X.shape[2])])[0]
                 if USE_WEIGHTS:
                     prediction = np.array(prediction) * np.array(WEIGHTS)
@@ -86,7 +97,7 @@ while True:
                         closeness += close_dict[np.argmax(y)][np.argmax(prediction)]
     print(30*"_")
     print("Weights:", WEIGHTS)
-    print(f"Real mobile2-32-batch-0001.hdf5 accuracy: {round(correct/total, 3)}. Accuracy considering 'closeness': {round(closeness/total, 3)}")
+    print(f"Epoch7 weights' accuracy: {round(correct/total, 3)}. Accuracy considering 'closeness': {round(closeness/total, 3)}")
     print(dist_dict)
     largest_key = max(dist_dict, key=dist_dict.get)
 
@@ -95,7 +106,7 @@ while True:
     with open('log.txt', "a") as f:
         f.write("Weights: "+str(WEIGHTS))
         f.write('\n')
-        f.write(f"Real mobile2-32-batch-0001.hdf5 accuracy: {round(correct/total, 3)}. Accuracy considering 'closeness': {round(closeness/total, 3)}\n")
+        f.write(f"Epoch7 weights' accuracy: {round(correct/total, 3)}. Accuracy considering 'closeness': {round(closeness/total, 3)}\n")
         f.write("Distribution: "+str(dist_dict))
         f.write("\n")
         f.write("\n")

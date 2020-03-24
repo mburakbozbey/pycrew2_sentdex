@@ -32,17 +32,22 @@ VERSION
 
 
 import cv2
+import numpy as np
+def delta_images(t0, t2):
+    # print(type(t0), type(t2))
+    # t2 = np.asarray(t2, np.uint8)
+    # t0 = np.asarray(t0, np.uint8)
+    # print(type(t0), type(t2))
 
-def delta_images(t0, t1, t2):
     d1 = cv2.absdiff(t2, t0)
     return d1
 
-def motion_detection(t_minus, t_now, t_plus):
-    delta_view = delta_images(t_minus, t_now, t_plus)
+def motion_detection(t_minus, t_plus):
+    delta_view = delta_images(t_minus, t_plus)
     retval, delta_view = cv2.threshold(delta_view, 16, 255, 3)
     cv2.normalize(delta_view, delta_view, 0, 255, cv2.NORM_MINMAX)
     img_count_view = cv2.cvtColor(delta_view, cv2.COLOR_RGB2GRAY)
     delta_count = cv2.countNonZero(img_count_view)
-    dst = cv2.addWeighted(screen,1.0, delta_view,0.6,0)
-    delta_count_last = delta_count
+    # Burda saçma seyler var
+    # dst = cv2.addWeighted(screen,1.0, delta_view,0.6,0)
     return delta_count

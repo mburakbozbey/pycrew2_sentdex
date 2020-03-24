@@ -3,16 +3,18 @@ from grabscreen import grab_screen
 import cv2
 import time
 from directkeys import PressKey,ReleaseKey, W, A, S, D
-from models import inception_v3 as googlenet
 from getkeys import key_check
-from collections import deque, Counter
+from collections import deque
 import random
-from statistics import mode,mean
+from statistics import mean
 import numpy as np
 from motion import motion_detection
+from keras.models import model_from_json
+import json
+from keras.applications.densenet import preprocess_input
 
-GAME_WIDTH = 1920
-GAME_HEIGHT = 1080
+GAME_WIDTH = 1280
+GAME_HEIGHT = 720
 
 how_far_remove = 800
 rs = (20,15)
@@ -110,16 +112,21 @@ def no_keys():
     ReleaseKey(A)
     ReleaseKey(S)
     ReleaseKey(D)
-    
 
+## Reload weights & model structure:
 
-model = googlenet(WIDTH, HEIGHT, 3, LR, output=9)
-MODEL_NAME = ''
-model.load(MODEL_NAME)
+with open('first_batch_model_Epoch_7_json.json','r') as f:
+    model_json = json.load(f)
 
+model = model_from_json(model_json)
+model.load_weights('first_batch_model_Epoch_7.h5')
 print('We have loaded a previous model!!!!')
 
+
+
 def main():
+    # weights = [4.5, 0.1, 0.1, 0.1,  1.8,  1.8, 0.5, 0.5, 0.2]
+    weights = [1, 1, 1, 1, 1, 1, 1, 1, 1]
     last_time = time.time()
     for i in list(range(4))[::-1]:
         print(i+1)
@@ -128,7 +135,7 @@ def main():
     paused = False
     mode_choice = 0
 
-    screen = grab_screen(region=(0,40,GAME_WIDTH,GAME_HEIGHT+40))
+    screen = grab_screen(region=(0, 40, GAME_WIDTH, GAME_HEIGHT+40))
     screen = cv2.cvtColor(screen, cv2.COLOR_BGR2RGB)
     prev = cv2.resize(screen, (WIDTH,HEIGHT))
 
@@ -144,16 +151,16 @@ def main():
 
             last_time = time.time()
             screen = cv2.resize(screen, (WIDTH,HEIGHT))
-
-            delta_count_last = motion_detection(t_minus, t_now, t_plus)
+            screen = preprocess_input(screen)
+            delta_count_last = motion_detection(np.asarray(t_minus, np.uint8), np.asarray(t_plus, np.uint8))
 
             t_minus = t_now
             t_now = t_plus
             t_plus = screen
             t_plus = cv2.blur(t_plus,(4,4))
 
-            prediction = model.predict([screen.reshape(WIDTH,HEIGHT,3)])[0]
-            prediction = np.array(prediction) * np.array([4.5, 0.1, 0.1, 0.1,  1.8,   1.8, 0.5, 0.5, 0.2])
+            prediction = model.predict([screen.reshape(-1, screen.shape[0], screen.shape[1], screen.shape[2])])[0]
+            prediction = np.array(prediction) * np.array(weights)
 
             mode_choice = np.argmax(prediction)
 
@@ -187,7 +194,7 @@ def main():
                 no_keys()
                 choice_picked = 'nokeys'
 
-            motion_log.append(delta_count)
+            motion_log.append(delta_count_last)
             motion_avg = round(mean(motion_log),3)
             print('loop took {} seconds. Motion: {}. Choice: {}'.format( round(time.time()-last_time, 3) , motion_avg, choice_picked))
             

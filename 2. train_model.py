@@ -8,19 +8,22 @@ from tqdm import tqdm
 from collections import deque
 from models import inception_v3 as googlenet
 from random import shuffle
+from glob import glob
 
+train_paths = glob(r"E:\crew2_train\training\*")
+train_idx = [path.split("-")[-1].split(".")[0] for path in train_paths]
 
-FILE_I_END = 1860
+train_len = 162
 
 WIDTH = 480
 HEIGHT = 270
 LR = 1e-3
 EPOCHS = 30
 
-MODEL_NAME = ''
+MODEL_NAME = 'first_try'
 PREV_MODEL = ''
 
-LOAD_MODEL = True
+LOAD_MODEL = False
 
 wl = 0
 sl = 0
@@ -43,7 +46,7 @@ sa = [0,0,0,0,0,0,1,0,0]
 sd = [0,0,0,0,0,0,0,1,0]
 nk = [0,0,0,0,0,0,0,0,1]
 
-model = googlenet(WIDTH, HEIGHT, 3, LR, output=9, model_name=MODEL_NAME)
+model = googlenet(WIDTH, HEIGHT, 3, LR, output=9, model_name=MODEL_NAME) ## Add Transfer Learning
 
 if LOAD_MODEL:
     model.load(PREV_MODEL)
@@ -54,34 +57,13 @@ if LOAD_MODEL:
 
 
 for e in range(EPOCHS):
-    #data_order = [i for i in range(1,FILE_I_END+1)]
-    data_order = [i for i in range(1,FILE_I_END+1)]
-    shuffle(data_order)
-    for count,i in enumerate(data_order):
-        
+    shuffle(train_idx)
+    for count, k in enumerate(train_idx):
         try:
-            file_name = 'J:/phase10-random-padded/training_data-{}.npy'.format(i)
-            # full file info
+            file_name = 'E:/crew2_train/training/training_data-{}.npy'.format(k)
             train_data = np.load(file_name)
-            print('training_data-{}.npy'.format(i),len(train_data))
+            print('training_data-{}.npy'.format(k), len(train_data))
 
-##            # [   [    [FRAMES], CHOICE   ]    ] 
-##            train_data = []
-##            current_frames = deque(maxlen=HM_FRAMES)
-##            
-##            for ds in data:
-##                screen, choice = ds
-##                gray_screen = cv2.cvtColor(screen, cv2.COLOR_RGB2GRAY)
-##
-##
-##                current_frames.append(gray_screen)
-##                if len(current_frames) == HM_FRAMES:
-##                    train_data.append([list(current_frames),choice])
-
-
-            # #
-            # always validating unique data: 
-            #shuffle(train_data)
             train = train_data[:-50]
             test = train_data[-50:]
 
@@ -94,8 +76,7 @@ for e in range(EPOCHS):
             model.fit({'input': X}, {'targets': Y}, n_epoch=1, validation_set=({'input': test_x}, {'targets': test_y}), 
                 snapshot_step=2500, show_metric=True, run_id=MODEL_NAME)
 
-
-            if count%10 == 0:
+            if count%1 == 0:
                 print('SAVING MODEL!')
                 model.save(MODEL_NAME)
                     
