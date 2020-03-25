@@ -36,7 +36,7 @@
  of the review of the paper
 
 ## TODO:
-
+- Fix storage problems: https://github.com/mverleg/array_storage_benchmark
 - Shuffle big dataset
 - Create a Keras data generator
 - Optimize training time
