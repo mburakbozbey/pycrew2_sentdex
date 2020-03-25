@@ -38,6 +38,9 @@
 
 - Shuffle big dataset
 - Create a Keras data generator
+- Optimize training time
+
+`%timeit preprocess_input(df_feature) >> 1.01 s ± 8.95 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)`
 - Optimize inference time
 - Optimize screen capturing
 - Adapt post-processing to main objective
