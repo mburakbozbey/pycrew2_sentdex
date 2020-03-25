@@ -32,7 +32,8 @@
 ### Why the model was fine-tuned on ImageNet weights?
 
 - From the paper “How transferable are features in deep neural networks?” by J. Yosinski et al., even big datasets can benefit from transfer learning which improves generalization. 
-- Presentation of the review of the paper: https://drive.google.com/file/d/1aGBy...
+- <a href="https://drive.google.com/open?id=1aGBy7CWERduEW1YBL_-PaiB1SiXR_uRv" target="_blank">Presentation</a>
+ of the review of the paper
 
 ## TODO:
 
