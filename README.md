@@ -9,7 +9,7 @@
 ### Objective
 
 - Since Crew 2 game has a relatively big map which takes approximately 1 hour to drive across, a deep neural network model can be trained to drive as fast as possible by learning from front camera of the vehicle and pressed keys while playing.
-- This is not a self-driving car application, the project's main objective is building & improving a real-time inference model on edge while driving like an average player(me).  
+- This is not a self-driving car application, the project's main objective is building & improving a real-time inference model on edge while driving with keyboard like an average player(me).  
 
 ### Dataset Description
 - **Dataset Size:** 88 GB Training, (80%) & 22 GB Testing (20%) and ~10 GB Validation. Distribution of classes:
