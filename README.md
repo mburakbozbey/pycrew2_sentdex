@@ -44,7 +44,7 @@
 - <del>Preprocess all dataset before training:</del>
 
 `%timeit preprocess_input(df_feature) >> 1.01 s ± 8.95 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)`
-- Optimize inference time
+- Optimize inference time, current: 50ms, target: 10 ms
 - Optimize screen capturing
 - Adapt post-processing to main objective
 - Add object detection for crash prevention
