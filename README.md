@@ -36,6 +36,7 @@
  of the review of the paper
 
 ## TODO:
+- There're 9 classes for each pressed key but these are not mutually exclusive. Convert the objective to multi-label multiclass classification problem.
 - Fix storage problems: https://github.com/mverleg/array_storage_benchmark
 - <del>Shuffle big dataset</del>
 - <del>Create a Keras data generator</del>
