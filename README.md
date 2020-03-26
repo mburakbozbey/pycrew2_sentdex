@@ -38,7 +38,7 @@
 ## TODO:
 - Fix storage problems: https://github.com/mverleg/array_storage_benchmark
 - <del>Shuffle big dataset</del>
-- Create a Keras data generator
+- <del>Create a Keras data generator</del>
 - Optimize training time
 - <del>Use mixed precision</del>: cannot be used efficiently with GTX 1060 Max Q due to 7.0+ compute capability requirement
 - <del>Preprocess all dataset before training:</del>
