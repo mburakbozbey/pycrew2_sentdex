@@ -40,6 +40,7 @@
 - Shuffle big dataset
 - Create a Keras data generator
 - Optimize training time
+- <del>Use mixed precision</del>: cannot be used efficiently with GTX 1060 Max Q due to 7.0+ compute capability requirement
 
 `%timeit preprocess_input(df_feature) >> 1.01 s ± 8.95 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)`
 - Optimize inference time
