@@ -41,7 +41,7 @@
 - <del>Shuffle big dataset</del>
 - <del>Create a Keras data generator</del>
 - Optimize training time
-- <del>Use mixed precision</del>: cannot be used efficiently with GTX 1060 Max Q due to 7.0+ compute capability requirement
+- <del>Use mixed precision for training</del>: cannot be used efficiently with GTX 1060 Max Q due to 7.0+ compute capability requirement
 - <del>Preprocess all dataset before training:</del>
 
 `%timeit preprocess_input(df_feature) >> 1.01 s ± 8.95 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)`
