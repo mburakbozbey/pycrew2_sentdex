@@ -36,11 +36,11 @@
  of the review of the paper
 
 ## TODO:
-- There're 9 classes for each pressed key but these are not mutually exclusive. Convert the objective to multi-label multiclass classification problem.
+- <del>There're 9 classes for each pressed key but these are not mutually exclusive. Convert the objective to multi-label multiclass classification problem.</del>
 - Fix storage problems: https://github.com/mverleg/array_storage_benchmark
 - <del>Shuffle big dataset</del>
 - <del>Create a Keras data generator</del>
-- Optimize training time
+- <del>Optimize training time by using the<a href="http://digital-thinking.de/tensorflow-vs-keras-or-how-to-speed-up-your-training-for-image-data-sets-by-factor-10/" target="_blank">reference</a></del>
 - <del>Use mixed precision for training</del>: cannot be used efficiently with GTX 1060 Max Q due to 7.0+ compute capability requirement
 - <del>Preprocess all dataset before training:</del>
 
